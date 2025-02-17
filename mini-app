@@ -1,1 +1,62 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Меню напитков</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; }
+        .container { max-width: 500px; margin: 20px auto; }
+        .card { border: 1px solid #ddd; padding: 10px; margin: 10px; cursor: pointer; }
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+    <div class="container" id="main-page">
+        <h2>Выберите заведение</h2>
+        <div class="card" onclick="openRestaurant('Atea Dostyk Plaza')">Atea Dostyk Plaza</div>
+        <div class="card" onclick="openRestaurant('Aport East')">Aport East</div>
+    </div>
+
+    <div class="container hidden" id="restaurant-page">
+        <h2 id="restaurant-title"></h2>
+        <div class="card" onclick="openMenu('Чай')">Чай</div>
+        <div class="card" onclick="openMenu('Кофе')">Кофе</div>
+        <div class="card" onclick="openMenu('Смузи')">Смузи</div>
+        <button onclick="goBack()">Назад</button>
+    </div>
+
+    <div class="container hidden" id="menu-page">
+        <h2 id="menu-title"></h2>
+        <div id="menu-items"></div>
+        <button onclick="goBack()">Назад</button>
+    </div>
+
+    <script>
+        function openRestaurant(name) {
+            document.getElementById("main-page").classList.add("hidden");
+            document.getElementById("restaurant-page").classList.remove("hidden");
+            document.getElementById("restaurant-title").innerText = name;
+        }
+
+        function openMenu(category) {
+            document.getElementById("restaurant-page").classList.add("hidden");
+            document.getElementById("menu-page").classList.remove("hidden");
+            document.getElementById("menu-title").innerText = category;
+            let menuItems = {
+                "Чай": ["Зелёный чай", "Чёрный чай", "Молочный улун"],
+                "Кофе": ["Эспрессо", "Капучино", "Латте"],
+                "Смузи": ["Клубничный", "Манговый", "Банановый"]
+            };
+            document.getElementById("menu-items").innerHTML = menuItems[category].map(item => `<div class='card'>${item}</div>`).join('');
+        }
+
+        function goBack() {
+            document.querySelectorAll(".container").forEach(el => el.classList.add("hidden"));
+            document.getElementById("main-page").classList.remove("hidden");
+        }
+    </script>
+</body>
+</html>
 
